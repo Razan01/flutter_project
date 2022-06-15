@@ -1,5 +1,7 @@
 
+import 'dart:collection';
 import 'dart:io';
+import 'package:test_api/backend.dart';
 
 
   /* 
@@ -11,41 +13,32 @@ import 'dart:io';
   attendees:graduate student families.
   buffet:it has coffee, sweets and some sandwiches. 
   */ 
-  List <Map<String,String?>> volunteersInfo = [
+  
+  List <Map<String,String?>> volunteersInformation = [
     {"FirstName": "Waad", "LastName": "alasam", "YearOfBithday": "2001", "ID":"1", "Gender":"Female"},
     {"FirstName": "Osama", "LastName": "alqarne", "YearOfBithday": "1997", "ID":"2", "Gender":"male"},
-    {"FirstName": "Shaud", "LastName": "aldawe", "YearOfBithday": "1999", "ID":"3", "Gender":"Female"},
+    {"FirstName": "Razan", "LastName": "Alabdulkarim", "YearOfBithday": "1999", "ID":"3", "Gender":"Female"},
     {"FirstName": null, "LastName": null, "YearOfBithday": null, "ID":null, "Gender":null},
-    {"FirstName": "shroq", "LastName": "alareny", "YearOfBithday": "2000", "ID":"5", "Gender":"Female"}
+    {"FirstName": "Arwa", "LastName": "alareny", "YearOfBithday": "2000", "ID":"5", "Gender":"Female"}
   ];
 
-  List <Map<dynamic,String?>> graduateSudentInfo = [
-    {"FirstName": "nouf", "LastName": "alsaleh", "YearOfBithday": "2004", "ID":"11", "Gender":"Female", "GPA":"1 class honors"},
-    {"FirstName": null, "LastName": null, "YearOfBithday": null, "ID":null, "Gender":null, "GPA":null},
-    {"FirstName": "manar", "LastName": "alqapane", "YearOfBithday": "1998", "ID":"13", "Gender":"Female", "GPA":"1 class honors"},
-    {"FirstName": "aziz", "LastName": "hamd", "YearOfBithday": "2002", "ID":"14", "Gender":"male", "GPA":"2 class honors"},
-    {"FirstName": "hawazn", "LastName": "altrke", "YearOfBithday": "1995", "ID":"15", "Gender":"Female", "GPA":"2 class honors"}
-  ];
+  var graduateSudentDegree = {
+      'Distinction First Class Honors' : 2,
+      'Distinction Second Class Honors':3
+  };
 
-  List <Map<String,int?>> techersIdjob = [
-    {"ID": 111, "password":1234 },
-    {"ID": null, "password":null},
-    {"ID": 113, "password":5678}
-  ];
+  String? techerName = null;
 
-  List <Map<String,bool?>> attendeesInfo = [
-    {"studentid": true, "families": true },
-    {"studentid": null, "kids": null }
-  ];
+  int attendees = 5; //كل طالب له 5 دعوات
 
-  List <Map<String,double?>> buffetInfo = [
-    {"company":null,"coffee": null},
-    {"company":12.0,"sweets": 100.20},
-    {"company":13.0,"sandwiches": 200.50}
+  List<String> buffet = [
+    "coffee",
+    "sweets",
+    "sandwiches"
   ];
 
 
-void main(){
+void main(){//start main
 
   //print menu..
   var listOfOptions =['volunteers', 'graduate student', 'techers', 'attendees', 'buffet'];
@@ -67,7 +60,8 @@ void main(){
  
  //the options..
   switch(inputOfindex){
-    case '1':
+
+    case '1'://volunteersInformation
 
     //scanner input
     print('____________________________________________\n');
@@ -77,14 +71,14 @@ void main(){
      
 
     //Start Loop
-    for(int i=0; i<volunteersInfo.length;i++){
+    for(int i=0; i<volunteersInformation.length-1;i++){
 
-      var vid = volunteersInfo[i]["ID"];
+      var vid = volunteersInformation[i]["ID"];
 
-
+     
       if(vid==null){//means empty
         print("somthing wint worng... \n your information gone ?~?");
-        print("==> ${volunteersInfo[i]}");
+        print("==> ${volunteersInformation[i]}");
         print("is it empty? yes");
         print("\n");
         break;
@@ -92,9 +86,9 @@ void main(){
       }
       if(vinputOfId==vid){//means not empty
         print("this is you information <3");
-        print("==> ${volunteersInfo[i]}");
+        print("==> ${volunteersInformation[i]}");
         print("is it empty? \" false = no , true = yes \"");
-        print(volunteersInfo[i++].isEmpty);
+        print(volunteersInformation[i++].isEmpty);
         print(" \n");
         break;
       }
@@ -106,162 +100,59 @@ void main(){
 
     //===============================================
 
-    case '2':
+    case '2'://graduateSudentDegree
 
     //scanner input
     print('____________________________________________\n');
-    print("congratulation for graduation <3... Please inter your ID ");
-    String? ginputOfId = stdin.readLineSync();
+
+    print("congratulation for graduation <3...");
+    print("Student with [Distinction First Class Honors] are: ${graduateSudentDegree["Distinction First Class Honors"]} and Student with [Distinction Second Class Honors] are: ${graduateSudentDegree["Distinction Second Class Honors"]} ");//like print line in java
+    
     print('____________________________________________\n');
      
-
-    //Start Loop
-    for(int i=0; i<graduateSudentInfo.length;i++){
-
-      var gid = graduateSudentInfo[i]["ID"];
-
-
-      if(gid==null){//means empty
-        print("somthing wint worng... \ncontact your academic advisor!!");
-        print("==> ${graduateSudentInfo[i]}");
-        print("sorry this informaton is empty");
-        print("\n");
-        break;
-
-      }
-      if(ginputOfId==gid){//means not empty
-        print("this is you information <3 bay ");
-        print("==> ${graduateSudentInfo[i]}");
-        print("is it empty? \" false = no , true = yes \"");
-        print(graduateSudentInfo[i++].isEmpty);
-        print(" \n");
-        break;
-      }
-      
-      
-    }//end Loop
 
     break;
     //end case 2
 
     //===============================================
 
-    case '3'://techersIdjob
+    case '3'://techerName
 
     //scanner input
     print('____________________________________________\n');
-    print("welcome, Please inter your ID ");
-    //int tinputOfId = int.parse(stdin.readByteSync());
-    int tinputOfId = stdin.readByteSync();
+    print("Hello,  ");
+    var techer =['Hanan', 'Amany', 'Maha', 'bodour', 'kadeja'];
+   
+    stdout.writeln("[[Please write the name]] who do you want to be responcepel on graduation 2022 \n");//like print line in java
+    techer.forEach((index2){
+    print("${techer.indexOf(index2)+1}. ${index2}");
+    });
     print('____________________________________________\n');
-     
-
-    //Start Loop
-    for(int i=0; i<techersIdjob.length;i++){
-
-      int? tid = techersIdjob[i]["ID"];
-
-
-      if(tid==null){//means empty
-        print("somthing wint worng... \ncontact with IT!");
-        print("==> ${techersIdjob[i]}");
-        print("sorry this informaton is empty");
-        print("\n");
-        break;
-
-      }
-      if(tinputOfId==tid){//means not empty
-        print("this is you information... ");
-        print("==> ${techersIdjob[i]}");
-        print("is it empty? \" false = no , true = yes \"");
-        print(techersIdjob[i++].isEmpty);
-        print(" \n");
-        break;
-      }
-      
-      
-    }//end Loop
-
+    //int tinputOfId = int.parse(stdin.readByteSync());
+    techerName = stdin.readLineSync();
+    print('____________________________________________\n'); 
+    print("Okey then T.${techerName} will be respond");
+    print('____________________________________________\n');
     break;
     //end case 3
 
     //===============================================
 
-    case '4':
-     //scanner input
+    case '4'://attendees
+    //scanner input
     print('____________________________________________\n');
-    print("welcome, attendees that allow to come ");
-    //int tinputOfId = int.parse(stdin.readByteSync());
-    bool ainputOfId = stdin.readLineSync();
+    print("Every graduate student have ${attendees} cards.");
     print('____________________________________________\n');
-     
-
-    //Start Loop
-    for(int i=0; i<attendeesInfo.length;i++){
-
-      bool? aid = attendeesInfo[i]["studentid"];
-
-
-      if(aid==null){//means empty
-        print("somthing wint worng... \ncontact with IT!");
-        print("==> ${attendeesInfo[i]}");
-        print("sorry this informaton is empty");
-        print("\n");
-        break;
-
-      }
-      if(ainputOfId==aid){//means not empty
-        print("it is approve... ");
-        print("==> ${attendeesInfo[i]}");
-        print("is it empty? \" false = no , true = yes \"");
-        print(attendeesInfo[i++].isEmpty);
-        print(" \n");
-        break;
-      }
-      
-      
-    }//end Loop
-
     break;
     //end case 4
 
     //===============================================
 
-    case '5':
+    case '5'://buffet
        //scanner input
     print('____________________________________________\n');
-    print("buffet left ");
-    //int tinputOfId = int.parse(stdin.readByteSync());
-    double binputOfId = stdin.readByteSync();
+    print("The university will offer a buffet and it will be there ${buffet[0]},${buffet[1]} and ${buffet[2]}. ");
     print('____________________________________________\n');
-     
-
-    //Start Loop
-    for(int i=0; i<buffetInfo.length;i++){
-
-      double? cid = buffetInfo[i]["company"];
-
-
-      if(cid==null){//means empty
-        print("somthing wint worng... \n");
-        print("==> ${attendeesInfo[i]}");
-        print("sorry this buffet is empty");
-        print("\n");
-        break;
-
-      }
-      if(binputOfId==cid){//means not empty
-        print("there are left of buffet... ");
-        print("==> ${buffetInfo[i]}");
-        print("is it empty? \" false = no , true = yes \"");
-        print(buffetInfo[i++].isEmpty);
-        print(" \n");
-        break;
-      }
-      
-      
-    }//end Loop
-
     break;
     //end case 5
 
@@ -271,8 +162,9 @@ void main(){
     break;
 
 
-  }
+  }//end switch
 
 
 
-}
+}//end main
+
